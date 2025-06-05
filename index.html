@@ -988,7 +988,14 @@
 
         // الاتصال بالخادم
         function connectToServer() {
-            gameState.socket = io('https://draw-game-vx60.onrender.com');
+            // تحديد عنوان الخادم بشكل ديناميكي
+            const serverUrl = window.location.hostname === 'localhost' ? 
+                'http://localhost:3000' : 
+                'https://draw-game-server.onrender.com';
+            
+            gameState.socket = io(serverUrl, {
+                path: '/socket.io' // المسار الافتراضي
+            });
             
             // معالجة أحداث السوكيت
             gameState.socket.on('connect', () => {
